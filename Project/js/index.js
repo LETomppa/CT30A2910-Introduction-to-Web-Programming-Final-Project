@@ -1,5 +1,5 @@
 const weatherapiAPIKEY = "e33f650cdc414a8c997134936241610";
-const openWeatherMapAPIKEY = "8c9107883bfdf71075576847dc60473b"
+const openWeatherMapAPIKEY = "8c9107883bfdf71075576847dc60473b";
 
 if (document.readyState !== "loading") {
     console.log("Document is ready!");
@@ -68,8 +68,8 @@ function buildChart(weatherApiData, omDayTempsData) { // Builds the day temperat
     for (i = 0; i < 24; i++) {
         hours.push(`${i.toString().padStart(2, '0')}`);
 
-        let weatherApiTempC = weatherApiForecastData[i].temp_c
-        let openMeteoTempC = openMeteoForecastData[i]
+        let weatherApiTempC = weatherApiForecastData[i].temp_c;
+        let openMeteoTempC = openMeteoForecastData[i];
         let weatherApiDisplayTemp;
         let openMeteoDisplayTemp;
 
@@ -121,7 +121,7 @@ function buildChart(weatherApiData, omDayTempsData) { // Builds the day temperat
         type: "line",
         height: 250,
         colors: [color, color2]
-    })
+    });
 }
 
 function buildWeekTemps(omWeekTempsData) { // Builds 7 days worth of min and max temperatures
@@ -129,7 +129,6 @@ function buildWeekTemps(omWeekTempsData) { // Builds 7 days worth of min and max
     let dailyMinTemps = omWeekTempsData.daily.temperature_2m_min;
     let weatherCodes = omWeekTempsData.daily.weather_code;
     let dates = omWeekTempsData.daily.time;
-    console.log(omWeekTempsData)
 
     const container = document.getElementById("week-forecast-container");
     document.getElementById("open-meteo-info-text").innerText = "Weekly Temperatures From Open Meteo";
@@ -174,7 +173,7 @@ function buildWeekTemps(omWeekTempsData) { // Builds 7 days worth of min and max
 
         const weatherConditionDiv = document.createElement("div");
         weatherConditionDiv.innerText = weatherDescription;
-        weatherConditionDiv.classList.add("condition-div")
+        weatherConditionDiv.classList.add("condition-div");
 
         dayDiv.appendChild(dateDiv);
         dayDiv.appendChild(maxTempDiv);
@@ -192,7 +191,7 @@ const processData = async (url) => {
 
     const locationNameElement = document.getElementById("location-name");
     const locationRegionCountry = document.getElementById("location-region-country");
-    const locationLocalTimeElement = document.getElementById("location-local-time")
+    const locationLocalTimeElement = document.getElementById("location-local-time");
     const currentTempElement = document.getElementById("current-temperature");
     const currentConditionElement = document.getElementById("current-condition");
     const iconDiv = document.getElementById("icon-div");
@@ -216,7 +215,7 @@ const processData = async (url) => {
         const omDayTempsData = await omDayTempsres.json();
 
         locationNameElement.innerText = locationName;
-        locationRegionCountry.innerText = `${locationRegion}, ${locationCountry}`
+        locationRegionCountry.innerText = `${locationRegion}, ${locationCountry}`;
 
         const selectedUnit = document.querySelector('input[name="temp-unit"]:checked').value;
         let displayTemp = convertTemp(currentTempC, selectedUnit);
@@ -238,12 +237,12 @@ const processData = async (url) => {
         iconDiv.innerHTML = "";
         iconDiv.appendChild(iconElement);
 
-        infoDiv.style.fontSize = "10px"
-        infoDiv.innerText = "Current weather provided by Weather API"
+        infoDiv.style.fontSize = "10px";
+        infoDiv.innerText = "Current weather provided by Weather API";
 
         buildChart(weatherApiData, omDayTempsData);
 
-        let omWeekTempsURL = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto`
+        let omWeekTempsURL = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto`;
         const omWeekTempsres = await fetch(omWeekTempsURL);
         const omWeekTempsData = await omWeekTempsres.json();
 
@@ -271,7 +270,7 @@ const processData = async (url) => {
             map.setView([lat, lon], 10);
         }
         const owmInfoDiv = document.getElementById("openweathermap-info");
-        owmInfoDiv.innerText = "Temperature map by openweathermap.org and OpenStreetMap"
+        owmInfoDiv.innerText = "Temperature map by openweathermap.org and OpenStreetMap";
 
 
     } catch (e) {
@@ -285,22 +284,22 @@ const processData = async (url) => {
 function updateLooks(tempC, localTime) { // Updates the look and feel of the website
     const currentWeatherDataContainer = document.getElementById("current-weather-data-container");
     const weekForecastContainer = document.getElementById("week-forecast-container");
-    const body = document.body
+    const body = document.body;
     const hour = parseInt(localTime.split(":")[0]);
     let tempColor;
     if (tempC < 0) {
-        tempColor = "#1100ff"
+        tempColor = "#1100ff";
     } else if (tempC >= 0 && tempC < 10) {
-        tempColor = "#47bfff"
+        tempColor = "#47bfff";
     } else if (tempC >= 10 && tempC < 20) {
-        tempColor = "#ffd500"
+        tempColor = "#ffd500";
     } else if (tempC >= 20 && tempC < 30) {
-        tempColor = "#ff8400"
+        tempColor = "#ff8400";
     } else {
-        tempColor = "#ff462e"
+        tempColor = "#ff462e";
     }
-    currentWeatherDataContainer.style.color = tempColor
-    weekForecastContainer.style.color = tempColor
+    currentWeatherDataContainer.style.color = tempColor;
+    weekForecastContainer.style.color = tempColor;
 
     if (hour <= 6 || hour >= 18) {
         body.style.backgroundColor = "#1a1a1a";
@@ -313,7 +312,7 @@ function updateLooks(tempC, localTime) { // Updates the look and feel of the web
 
 function initializeCode() {
     
-    const baseUrl = "http://api.weatherapi.com/v1"
+    const baseUrl = "http://api.weatherapi.com/v1";
     const searchButton = document.getElementById("search-button");
     const userLocationButton = document.getElementById("user-location-button");
     const tempUnitRadioButtons = document.querySelectorAll('input[name="temp-unit"]');
@@ -341,7 +340,7 @@ function initializeCode() {
                 document.getElementById("search-input").value = "";
                 processData(url);
             }, (error) => {
-                alert("Couldn't get your location.")
+                alert("Couldn't get your location.");
             });
         } else {
             alert("Geolocation is not supported by this browser.");
