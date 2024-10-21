@@ -1,3 +1,6 @@
+const weatherapiAPIKEY = "e33f650cdc414a8c997134936241610";
+const openWeatherMapAPIKEY = "8c9107883bfdf71075576847dc60473b"
+
 if (document.readyState !== "loading") {
     console.log("Document is ready!");
     initializeCode();
@@ -257,12 +260,11 @@ const processData = async (url) => {
                 center: [lat, lon],
                 zoom: 10,
             });
-            const weatherMapAPIKEY = "8c9107883bfdf71075576847dc60473b"
             let osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
                 maxZoom: 19,
                 attribution: "© OpenStreetMap"
             }).addTo(map);
-            L.tileLayer(`https://tile.openweathermap.org/map/temp/{z}/{x}/{y}.png?appid=${weatherMapAPIKEY}`, {
+            L.tileLayer(`https://tile.openweathermap.org/map/temp/{z}/{x}/{y}.png?appid=${openWeatherMapAPIKEY}`, {
                 opacity: 0.6
             }).addTo(map)
         } else {
@@ -310,7 +312,7 @@ function updateLooks(tempC, localTime) { // Updates the look and feel of the web
 }
 
 function initializeCode() {
-    const API_KEY = "e33f650cdc414a8c997134936241610";
+    
     const baseUrl = "http://api.weatherapi.com/v1"
     const searchButton = document.getElementById("search-button");
     const userLocationButton = document.getElementById("user-location-button");
@@ -324,7 +326,7 @@ function initializeCode() {
         let city = document.getElementById("search-input").value;
         lastSearchedCity = city;
         useGeolocation = false;
-        let url = `${baseUrl}/forecast.json?key=${API_KEY}&q=${city}`;
+        let url = `${baseUrl}/forecast.json?key=${weatherapiAPIKEY}&q=${city}`;
         document.getElementById("search-input").value = "";
         processData(url);
     });
@@ -335,7 +337,7 @@ function initializeCode() {
                 const lat = position.coords.latitude.toFixed(2);
                 const lon = position.coords.longitude.toFixed(2);
                 useGeolocation = true;
-                let url = `${baseUrl}/forecast.json?key=${API_KEY}&q=${lat},${lon}`;
+                let url = `${baseUrl}/forecast.json?key=${weatherapiAPIKEY}&q=${lat},${lon}`;
                 document.getElementById("search-input").value = "";
                 processData(url);
             }, (error) => {
@@ -353,14 +355,14 @@ function initializeCode() {
                     navigator.geolocation.getCurrentPosition(async (position) => {
                         const lat = position.coords.latitude.toFixed(2);
                         const lon = position.coords.longitude.toFixed(2);
-                        let url = `${baseUrl}/forecast.json?key=${API_KEY}&q=${lat},${lon}`;
+                        let url = `${baseUrl}/forecast.json?key=${weatherapiAPIKEY}&q=${lat},${lon}`;
                         processData(url);
                     }, (error) => {
                         alert("Couldn't get your location.");
                     });
                 }
             } else if (lastSearchedCity) {
-                let url = `${baseUrl}/forecast.json?key=${API_KEY}&q=${lastSearchedCity}`;
+                let url = `${baseUrl}/forecast.json?key=${weatherapiAPIKEY}&q=${lastSearchedCity}`;
                 processData(url);
             }
         });
